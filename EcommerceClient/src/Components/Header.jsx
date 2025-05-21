@@ -73,7 +73,7 @@ const Header = ({ darkMode, setDarkMode }) => {
           <FiShoppingCart size={18} />
           Sepet
           {cartItemCount > 0 && (
-            <span className="absolute -top-4 -right-3 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+            <span className="absolute -top-4 -right-3 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-green-100 bg-green-600 rounded-full">
               {cartItemCount}
             </span>
           )}

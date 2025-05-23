@@ -103,8 +103,8 @@ const SimilarProducts = ({ darkMode }) => {
 
   return (
     <div
-      className={`mt-10 border-t-2 pt-6 px-10 ${
-        darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
+      className={`mt-10 pt-6 px-10 ${
+        darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
       }`}
     >
       <h1 className="text-lg font-bold mb-6 text-center">

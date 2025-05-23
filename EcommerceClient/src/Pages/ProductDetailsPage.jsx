@@ -6,6 +6,7 @@ import ProductInfo from "../Components/ProductDetailsComponent/ProductInfo";
 import ProductReview from "../Components/ProductDetailsComponent/ProductReview ";
 import CartItem from "../Components/CartItem";
 import SimilarProducts from "../Components/ProductDetailsComponent/SimilarProducts";
+import Footer from "../Components/Footer";
 
 const ProductDetailsPage = () => {
   const [darkMode, setDarkMode] = useState(() => {
@@ -22,7 +23,7 @@ const ProductDetailsPage = () => {
   return (
     <>
       <div
-        className={`${
+        className={`select-none ${
           darkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-gray-900"
         } min-h-screen transition-colors duration-300`}
       >
@@ -45,6 +46,7 @@ const ProductDetailsPage = () => {
           <CartItem darkMode={darkMode} setDarkMode={setDarkMode} />
         </div>
         <SimilarProducts darkMode={darkMode} setDarkMode={setDarkMode} />
+        <Footer darkMode={darkMode} setDarkMode={setDarkMode} />
       </div>
     </>
   );

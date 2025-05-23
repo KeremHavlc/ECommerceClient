@@ -5,6 +5,7 @@ import ProductDetailsImage from "../Components/ProductDetailsComponent/ProductDe
 import ProductInfo from "../Components/ProductDetailsComponent/ProductInfo";
 import ProductReview from "../Components/ProductDetailsComponent/ProductReview ";
 import CartItem from "../Components/CartItem";
+import SimilarProducts from "../Components/ProductDetailsComponent/SimilarProducts";
 
 const ProductDetailsPage = () => {
   const [darkMode, setDarkMode] = useState(() => {
@@ -43,6 +44,7 @@ const ProductDetailsPage = () => {
           </div>
           <CartItem darkMode={darkMode} setDarkMode={setDarkMode} />
         </div>
+        <SimilarProducts darkMode={darkMode} setDarkMode={setDarkMode} />
       </div>
     </>
   );

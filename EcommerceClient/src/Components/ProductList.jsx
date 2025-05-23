@@ -41,6 +41,13 @@ const products = [
     price: 160,
     imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
   },
+  {
+    id: 5,
+    name: "Oceania Street beat",
+    description: "www.tiktok.com",
+    price: 160,
+    imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
+  },
 ];
 
 const ProductList = () => {
@@ -50,7 +57,7 @@ const ProductList = () => {
   };
 
   return (
-    <div className="flex ml-[321px] mr-[325px] justify-between mt-[50px]">
+    <div className="flex flex-wrap justify-start gap-6 px-10 mt-12 ml-[280px] w-[1450px]">
       {products.map((product) => (
         <div key={product.id} style={{ position: "relative", width: 240 }}>
           <Card

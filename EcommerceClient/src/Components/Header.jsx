@@ -10,6 +10,7 @@ import {
 
 const Header = ({ darkMode, setDarkMode }) => {
   const cartItemCount = 3;
+  const isLoggedIn = false;
 
   return (
     <header
@@ -47,45 +48,64 @@ const Header = ({ darkMode, setDarkMode }) => {
         />
       </div>
 
-      {/* Pages + Dark Mode Toggle */}
+      {/* Pages / Auth Area */}
       <div className="flex items-center gap-8 text-sm font-medium">
-        <button
-          className={`flex items-center gap-1 cursor-pointer hover:${
-            darkMode ? "text-green-400" : "text-green-300"
-          } text-gray-400`}
-        >
-          <FiHome size={18} />
-          Ana Sayfa
-        </button>
-        <button
-          className={`flex items-center gap-1 cursor-pointer hover:${
-            darkMode ? "text-green-400" : "text-green-400"
-          } text-gray-400`}
-        >
-          <FiUser size={18} />
-          Profil
-        </button>
-        <button
-          className={`flex items-center gap-1 cursor-pointer relative hover:${
-            darkMode ? "text-green-400" : "text-green-400"
-          } text-gray-400`}
-        >
-          <FiShoppingCart size={18} />
-          Sepet
-          {cartItemCount > 0 && (
-            <span className="absolute -top-4 -right-3 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-green-100 bg-green-600 rounded-full">
-              {cartItemCount}
-            </span>
-          )}
-        </button>
-        <button
-          className={`flex items-center gap-1 cursor-pointer hover:${
-            darkMode ? "text-green-400" : "text-green-400"
-          } text-gray-400`}
-        >
-          <FiLogOut size={18} />
-          Çıkış
-        </button>
+        {isLoggedIn ? (
+          <>
+            <button
+              className={`flex items-center gap-1 cursor-pointer hover:${
+                darkMode ? "text-green-400" : "text-green-300"
+              } text-gray-400`}
+            >
+              <FiHome size={18} />
+              Ana Sayfa
+            </button>
+            <button
+              className={`flex items-center gap-1 cursor-pointer hover:text-green-400 text-gray-400`}
+            >
+              <FiUser size={18} />
+              Profil
+            </button>
+            <button
+              className={`flex items-center gap-1 cursor-pointer relative hover:text-green-400 text-gray-400`}
+            >
+              <FiShoppingCart size={18} />
+              Sepet
+              {cartItemCount > 0 && (
+                <span className="absolute -top-4 -right-3 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-green-100 bg-green-600 rounded-full">
+                  {cartItemCount}
+                </span>
+              )}
+            </button>
+            <button
+              className={`flex items-center gap-1 cursor-pointer hover:text-green-400 text-gray-400`}
+            >
+              <FiLogOut size={18} />
+              Çıkış
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              className={`px-4 py-1 rounded-lg border ${
+                darkMode
+                  ? "text-green-400 border-green-400 hover:bg-green-800"
+                  : "text-green-600 border-green-600 hover:bg-green-100"
+              } transition`}
+            >
+              Giriş Yap
+            </button>
+            <button
+              className={`px-4 py-1 rounded-lg border ${
+                darkMode
+                  ? "text-white border-white hover:bg-white hover:text-gray-900"
+                  : "text-white bg-green-500 border-green-500 hover:bg-green-600"
+              } transition`}
+            >
+              Kayıt Ol
+            </button>
+          </>
+        )}
       </div>
     </header>
   );

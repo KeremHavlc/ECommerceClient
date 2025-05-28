@@ -10,7 +10,7 @@ import {
 
 const Header = ({ darkMode, setDarkMode }) => {
   const cartItemCount = 3;
-  const isLoggedIn = false;
+  const isLoggedIn = true;
 
   return (
     <header

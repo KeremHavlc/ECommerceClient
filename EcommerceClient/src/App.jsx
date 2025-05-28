@@ -4,6 +4,7 @@ import HomePage from "./Pages/HomePage";
 import ProductDetailsPage from "./Pages/ProductDetailsPage";
 import ProfilePage from "./Pages/ProfilePage";
 import AllOrdersPage from "./Pages/AllOrdersPage";
+import RatingsAndReviewsPage from "./Pages/RatingsAndReviewsPage";
 function App() {
   return (
     <BrowserRouter>
@@ -13,6 +14,7 @@ function App() {
         <Route path="/productDetails" element={<ProductDetailsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile/allOrder" element={<AllOrdersPage />} />
+        <Route path="/profile/review" element={<RatingsAndReviewsPage />} />
       </Routes>
     </BrowserRouter>
   );

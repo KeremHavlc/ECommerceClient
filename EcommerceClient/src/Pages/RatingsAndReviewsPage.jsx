@@ -4,10 +4,8 @@ import Categories from "../Components/Categories";
 import UserInfo from "../Components/ProfilePageComponent/UserInfo";
 import OrderList from "../Components/ProfilePageComponent/OrderList";
 import AccountInfo from "../Components/ProfilePageComponent/AccountInfo";
-import UserOrderList from "../Components/AllOrderPageComponent/UserOrderList";
-import OrderSearch from "../Components/AllOrderPageComponent/OrderSearch.JSX";
 
-const AllOrdersPage = () => {
+const RatingsAndReviewsPage = () => {
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("mode") === "true";
@@ -33,14 +31,10 @@ const AllOrdersPage = () => {
             <OrderList darkMode={darkMode} setDarkMode={setDarkMode} />
             <AccountInfo darkMode={darkMode} setDarkMode={setDarkMode} />
           </div>
-          <UserOrderList darkMode={darkMode} setDarkMode={setDarkMode} />
-          <div>
-            <OrderSearch darkMode={darkMode} />
-          </div>
         </div>
       </div>
     </>
   );
 };
 
-export default AllOrdersPage;
+export default RatingsAndReviewsPage;

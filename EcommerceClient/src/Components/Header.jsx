@@ -7,11 +7,12 @@ import {
   FiSun,
   FiMoon,
 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ darkMode, setDarkMode }) => {
   const cartItemCount = 3;
   const isLoggedIn = true;
-
+  const navigate = useNavigate();
   return (
     <header
       className={`h-[70px] shadow-md border-b px-80 flex justify-between items-center
@@ -53,6 +54,7 @@ const Header = ({ darkMode, setDarkMode }) => {
         {isLoggedIn ? (
           <>
             <button
+              onClick={() => navigate("/")}
               className={`flex items-center gap-1 cursor-pointer hover:${
                 darkMode ? "text-green-400" : "text-green-300"
               } text-gray-400`}
@@ -61,6 +63,7 @@ const Header = ({ darkMode, setDarkMode }) => {
               Ana Sayfa
             </button>
             <button
+              onClick={() => navigate("/profile")}
               className={`flex items-center gap-1 cursor-pointer hover:text-green-400 text-gray-400`}
             >
               <FiUser size={18} />

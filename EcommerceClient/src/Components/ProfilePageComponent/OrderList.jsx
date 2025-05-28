@@ -25,6 +25,7 @@ const OrderList = ({ darkMode }) => {
           <h2 className="text-sm">Tüm Siparişlerim</h2>
         </div>
         <div
+          onClick={() => navigate("/profile/review")}
           className={`flex items-center gap-2 p-2 rounded-md transition cursor-pointer ${
             darkMode
               ? "bg-gray-800 hover:bg-gray-700 border border-gray-600"

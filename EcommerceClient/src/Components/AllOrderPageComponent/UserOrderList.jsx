@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { toast } from "react-fox-toast";
 const orders = [
   {
     date: "25/05/2025",
@@ -34,10 +34,16 @@ const orders = [
 ];
 
 const UserOrderList = ({ darkMode }) => {
+  const [copiedId, setCopiedId] = useState(null);
+  const copyId = (id) => {
+    navigator.clipboard.writeText(id);
+    setCopiedId(id);
+    toast.success("Panoya Kopyalandı!");
+  };
   return (
     <div>
       <div
-        className={`border w-[700px] h-[50px] mt-[40px] ml-[100px] rounded-lg flex justify-center items-center font-bold
+        className={`border w-[700px] h-[50px] mt-[40px] ml-[35px] rounded-lg flex justify-center items-center font-bold
           ${
             darkMode
               ? "bg-gray-900 text-white border-gray-700"
@@ -50,7 +56,7 @@ const UserOrderList = ({ darkMode }) => {
 
       {/* Kolon Başlıkları */}
       <div
-        className={`w-[700px] mt-[30px] ml-[100px] font-semibold px-10 flex justify-between
+        className={`w-[700px] mt-[30px] ml-[35px] font-semibold px-10 flex justify-between
           ${darkMode ? "text-white" : "text-gray-800"}
         `}
       >
@@ -64,7 +70,7 @@ const UserOrderList = ({ darkMode }) => {
       {orders.map((order, index) => (
         <div
           key={index}
-          className={`border w-[700px] h-[100px] mt-[20px] ml-[100px] rounded-lg px-10 flex items-center justify-between
+          className={`border w-[700px] h-[100px] mt-[20px] ml-[35px] rounded-lg px-10 flex items-center justify-between
             ${
               darkMode
                 ? "bg-gray-900 text-white border-gray-700"
@@ -73,7 +79,14 @@ const UserOrderList = ({ darkMode }) => {
           `}
         >
           <h2>{order.date}</h2>
-          <h2>{order.id}</h2>
+          <h2
+            onClick={() => copyId(order.id)}
+            className={`cursor-pointer ${
+              darkMode ? "text-green-400" : "text-green-400"
+            }`}
+          >
+            {order.id.slice(0, 7)}...{order.id.slice(-4)}
+          </h2>
           <h2>{order.buyer}</h2>
           <h2>{order.total}</h2>
         </div>

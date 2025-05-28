@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Components/Header";
 import Categories from "../Components/Categories";
 import UserInfo from "../Components/ProfilePageComponent/UserInfo";
 import OrderList from "../Components/ProfilePageComponent/OrderList";
 import AccountInfo from "../Components/ProfilePageComponent/AccountInfo";
+import UserOrderList from "../Components/AllOrderPageComponent/UserOrderList";
 
-const ProfilePage = () => {
+const AllOrdersPage = () => {
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("mode") === "true";
@@ -25,12 +26,17 @@ const ProfilePage = () => {
       >
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
         <Categories darkMode={darkMode} setDarkMode={setDarkMode} />
-        <UserInfo darkMode={darkMode} setDarkMode={setDarkMode} />
-        <OrderList darkMode={darkMode} setDarkMode={setDarkMode} />
-        <AccountInfo darkMode={darkMode} setDarkMode={setDarkMode} />
+        <div className="flex">
+          <div>
+            <UserInfo darkMode={darkMode} setDarkMode={setDarkMode} />
+            <OrderList darkMode={darkMode} setDarkMode={setDarkMode} />
+            <AccountInfo darkMode={darkMode} setDarkMode={setDarkMode} />
+          </div>
+          <UserOrderList darkMode={darkMode} setDarkMode={setDarkMode} />
+        </div>
       </div>
     </>
   );
 };
 
-export default ProfilePage;
+export default AllOrdersPage;

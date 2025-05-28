@@ -1,7 +1,9 @@
 import React from "react";
 import { FaBoxOpen, FaStar, FaRedo } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const OrderList = ({ darkMode }) => {
+  const navigate = useNavigate();
   return (
     <div
       className={`border rounded-lg shadow-md w-[250px] h-auto ml-[321px] mt-[30px] p-4 transition-colors duration-300 ${
@@ -12,7 +14,8 @@ const OrderList = ({ darkMode }) => {
     >
       <div className="flex flex-col gap-3">
         <div
-          className={`flex items-center gap-2 p-2 rounded-md transition ${
+          onClick={() => navigate("/profile/allOrder")}
+          className={`flex items-center gap-2 p-2 rounded-md transition  cursor-pointer ${
             darkMode
               ? "bg-gray-800 hover:bg-gray-700 border border-gray-600"
               : "bg-gray-100 hover:bg-gray-200 border border-gray-300"
@@ -22,7 +25,7 @@ const OrderList = ({ darkMode }) => {
           <h2 className="text-sm">Tüm Siparişlerim</h2>
         </div>
         <div
-          className={`flex items-center gap-2 p-2 rounded-md transition ${
+          className={`flex items-center gap-2 p-2 rounded-md transition cursor-pointer ${
             darkMode
               ? "bg-gray-800 hover:bg-gray-700 border border-gray-600"
               : "bg-gray-100 hover:bg-gray-200 border border-gray-300"
@@ -32,7 +35,7 @@ const OrderList = ({ darkMode }) => {
           <h2 className="text-sm">Değerlendirmelerim</h2>
         </div>
         <div
-          className={`flex items-center gap-2 p-2 rounded-md transition ${
+          className={`flex items-center gap-2 p-2 rounded-md transition cursor-pointer ${
             darkMode
               ? "bg-gray-800 hover:bg-gray-700 border border-gray-600"
               : "bg-gray-100 hover:bg-gray-200 border border-gray-300"

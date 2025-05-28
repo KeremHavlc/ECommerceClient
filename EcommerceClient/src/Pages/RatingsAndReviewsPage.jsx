@@ -4,6 +4,7 @@ import Categories from "../Components/Categories";
 import UserInfo from "../Components/ProfilePageComponent/UserInfo";
 import OrderList from "../Components/ProfilePageComponent/OrderList";
 import AccountInfo from "../Components/ProfilePageComponent/AccountInfo";
+import ReviewPanel from "../Components/FeedBackPageComponents/ReviewPanel";
 
 const RatingsAndReviewsPage = () => {
   const [darkMode, setDarkMode] = useState(() => {
@@ -30,6 +31,9 @@ const RatingsAndReviewsPage = () => {
             <UserInfo darkMode={darkMode} setDarkMode={setDarkMode} />
             <OrderList darkMode={darkMode} setDarkMode={setDarkMode} />
             <AccountInfo darkMode={darkMode} setDarkMode={setDarkMode} />
+          </div>
+          <div>
+            <ReviewPanel darkMode={darkMode} setDarkMode={setDarkMode} />
           </div>
         </div>
       </div>

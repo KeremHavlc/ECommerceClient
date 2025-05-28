@@ -56,7 +56,7 @@ const UserOrderList = ({ darkMode }) => {
 
       {/* Kolon Başlıkları */}
       <div
-        className={`w-[700px] mt-[30px] ml-[35px] font-semibold px-10 flex justify-between
+        className={`w-[700px] mt-[30px] ml-[20px] font-semibold px-10 flex justify-between
           ${darkMode ? "text-white" : "text-gray-800"}
         `}
       >

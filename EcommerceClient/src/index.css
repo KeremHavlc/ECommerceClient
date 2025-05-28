@@ -1,3 +1,51 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.dark-modal .ant-modal-content {
+  background-color: #1f2937 !important;
+  color: white !important;
+}
+
+.light-modal .ant-modal-content {
+  background-color: white !important;
+  color: black !important;
+}
+
+.dark-modal .ant-modal-header,
+.dark-modal .ant-modal-footer {
+  background-color: #1f2937 !important;
+  color: white !important;
+}
+
+.light-modal .ant-modal-header,
+.light-modal .ant-modal-footer {
+  background-color: white !important;
+  color: black !important;
+}
+
+
+.dark-btn {
+  background-color: green !important;
+  border-color: green !important;
+  color: white !important;
+}
+
+.dark-btn:hover {
+  background-color: #0b7a07 !important; 
+  border-color: #0b7a07 !important;
+  color: white !important;
+}
+
+.light-btn {
+  background-color: white !important;
+  border-color: #16a34a !important; 
+  color: #16a34a !important;
+}
+
+.light-btn:hover {
+  background-color: #16a34a !important; 
+  border-color: #16a34a !important;
+  color: white !important;
+}

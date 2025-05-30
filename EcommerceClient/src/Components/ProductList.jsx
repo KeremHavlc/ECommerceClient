@@ -50,7 +50,7 @@ const products = [
   },
 ];
 
-const ProductList = () => {
+const ProductList = ({ darkMode }) => {
   const handleAddToCart = (product) => {
     console.log(product.name + " sepete eklendi!");
     toast.success("Sepete eklendi!");
@@ -63,6 +63,7 @@ const ProductList = () => {
           <Card
             hoverable
             cover={<img alt={product.name} src={product.imageUrl} />}
+            className={darkMode ? "bg-gray-700 border-gray-600 text-white" : ""}
           >
             <Meta title={product.name} description={product.description} />
             <div style={{ marginTop: 10, fontWeight: "bold", fontSize: 16 }}>
@@ -72,15 +73,16 @@ const ProductList = () => {
 
           <Tooltip title="Sepete Ekle">
             <ShoppingCartOutlined
+              className="text-green-400"
               onClick={() => handleAddToCart(product)}
               style={{
                 fontSize: 24,
-                color: "#1890ff",
+                color: "#4ade80",
                 cursor: "pointer",
                 position: "absolute",
                 top: 10,
                 right: 10,
-                background: "white",
+                background: darkMode ? "#374151" : "white",
                 borderRadius: "50%",
                 padding: 6,
                 boxShadow: "0 0 5px rgba(0,0,0,0.15)",

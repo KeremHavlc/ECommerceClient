@@ -1,7 +1,9 @@
 import React from "react";
 import { FiMapPin, FiUser } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const AccountInfo = ({ darkMode }) => {
+  const navigate = useNavigate();
   return (
     <>
       <div
@@ -13,6 +15,7 @@ const AccountInfo = ({ darkMode }) => {
       >
         <div className="flex flex-col gap-3">
           <div
+            onClick={() => navigate("/profile/Account")}
             className={`flex items-center gap-2 p-2 rounded-md transition cursor-pointer ${
               darkMode
                 ? "bg-gray-800 hover:bg-gray-700 border border-gray-600"
@@ -23,6 +26,7 @@ const AccountInfo = ({ darkMode }) => {
             <h2 className="text-sm">Kullanıcı Bilgilerim</h2>
           </div>
           <div
+            onClick={() => navigate("/profile/Addresses")}
             className={`flex items-center gap-2 p-2 rounded-md transition cursor-pointer ${
               darkMode
                 ? "bg-gray-800 hover:bg-gray-700 border border-gray-600"

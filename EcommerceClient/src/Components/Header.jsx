@@ -21,6 +21,7 @@ const Header = ({ darkMode, setDarkMode }) => {
     >
       {/* Logo */}
       <button
+        onClick={() => navigate("/")}
         className={`text-xl font-bold ${
           darkMode ? "text-green-400" : "text-green-400"
         }`}

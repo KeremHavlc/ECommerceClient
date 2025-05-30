@@ -138,7 +138,9 @@ const SimilarProducts = ({ darkMode }) => {
               <Card
                 hoverable
                 cover={<img alt={product.name} src={product.imageUrl} />}
-                className={darkMode ? "bg-gray-700" : ""}
+                className={
+                  darkMode ? "bg-gray-700 border-gray-600 text-white" : ""
+                }
               >
                 <Meta title={product.name} description={product.description} />
                 <div
@@ -150,10 +152,11 @@ const SimilarProducts = ({ darkMode }) => {
 
               <Tooltip title="Sepete Ekle">
                 <ShoppingCartOutlined
+                  className="text-green-400"
                   onClick={() => handleAddToCart(product)}
                   style={{
                     fontSize: 24,
-                    color: "#1890ff",
+                    color: "#4ade80",
                     cursor: "pointer",
                     position: "absolute",
                     top: 10,

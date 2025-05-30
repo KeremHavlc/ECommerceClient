@@ -1,68 +1,55 @@
-import React from "react";
-import { Card, Tooltip } from "antd";
+import React, { useEffect, useState } from "react";
+import { Card, Image, Tooltip } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { toast } from "react-fox-toast";
-
 const { Meta } = Card;
 
-const products = [
-  {
-    id: 1,
-    name: "Europe Street beat",
-    description: "www.instagram.com",
-    price: 150,
-    imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-  },
-  {
-    id: 2,
-    name: "Asia Street vibe",
-    description: "www.facebook.com",
-    price: 200,
-    imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-  },
-  {
-    id: 3,
-    name: "America Street sound",
-    description: "www.twitter.com",
-    price: 175,
-    imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-  },
-  {
-    id: 4,
-    name: "Africa Street rhythm",
-    description: "www.linkedin.com",
-    price: 180,
-    imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-  },
-  {
-    id: 5,
-    name: "Oceania Street beat",
-    description: "www.tiktok.com",
-    price: 160,
-    imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-  },
-  {
-    id: 5,
-    name: "Oceania Street beat",
-    description: "www.tiktok.com",
-    price: 160,
-    imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-  },
-];
-
 const ProductList = ({ darkMode }) => {
+  const [data, setData] = useState([]);
+
   const handleAddToCart = (product) => {
     console.log(product.name + " sepete eklendi!");
     toast.success("Sepete eklendi!");
   };
 
+  const fetchProduct = async () => {
+    try {
+      const res = await fetch("https://localhost:7042/api/Products/getall");
+      if (!res.ok) {
+        return console.log(error);
+      }
+      const data = await res.json();
+      setData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchProduct();
+  }, []);
+
   return (
-    <div className="flex flex-wrap justify-start gap-6 px-10 mt-12 ml-[280px] w-[1450px]">
-      {products.map((product) => (
-        <div key={product.id} style={{ position: "relative", width: 240 }}>
+    <div className="flex flex-wrap justify-start gap-6 px-10 mt-12 ml-[310px] w-[1450px]">
+      {data.map((product) => (
+        <div key={product.id} style={{ position: "relative", width: 280 }}>
           <Card
             hoverable
-            cover={<img alt={product.name} src={product.imageUrl} />}
+            cover={
+              <Image
+                src={product.image}
+                alt={product.name}
+                width={280}
+                height={350}
+                style={{ objectFit: "cover" }}
+                preview={{
+                  mask: (
+                    <div style={{ color: "white", fontWeight: "bold" }}>
+                      Büyüt
+                    </div>
+                  ),
+                }}
+              />
+            }
             className={darkMode ? "bg-gray-700 border-gray-600 text-white" : ""}
           >
             <Meta title={product.name} description={product.description} />

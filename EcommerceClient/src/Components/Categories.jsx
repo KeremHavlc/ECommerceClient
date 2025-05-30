@@ -1,18 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiMoon, FiSun } from "react-icons/fi";
 import { MdCategory } from "react-icons/md";
 
 const Categories = ({ darkMode, setDarkMode }) => {
   const [selected, setSelected] = useState("Tüm Kategoriler");
+  const [category, setCategory] = useState([]);
 
-  const categories = [
-    "Teknoloji",
-    "Giyim",
-    "Yemek",
-    "İçecek",
-    "Kozmetik",
-    "Çok Satanlar",
-  ];
+  const fetchCategories = async () => {
+    try {
+      const res = await fetch("https://localhost:7042/api/Categories/getAll");
+      if (!res.ok) {
+        console.log(error);
+      }
+      const data = await res.json();
+      setCategory(data.data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   return (
     <div
@@ -45,23 +54,24 @@ const Categories = ({ darkMode, setDarkMode }) => {
 
       {/* Diğer kategoriler */}
       <div className="flex space-x-6 overflow-x-auto scrollbar-hide ml-3">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setSelected(cat)}
-            className={`whitespace-nowrap px-3 py-1 rounded-md font-medium transition-colors duration-200 ${
-              selected === cat
-                ? darkMode
-                  ? "bg-green-600 text-white"
-                  : "bg-green-400 text-white"
-                : darkMode
-                ? "hover:text-green-400"
-                : "hover:text-green-600"
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
+        {Array.isArray(category) &&
+          category.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setSelected(cat.name)}
+              className={`whitespace-nowrap px-3 py-1 rounded-md font-medium transition-colors duration-200 ${
+                selected === cat.name
+                  ? darkMode
+                    ? "bg-green-600 text-white"
+                    : "bg-green-400 text-white"
+                  : darkMode
+                  ? "hover:text-green-400"
+                  : "hover:text-green-600"
+              }`}
+            >
+              {cat.name}
+            </button>
+          ))}
       </div>
       {/* Dark Mode Toggle Button */}
       <div className="ml-auto">

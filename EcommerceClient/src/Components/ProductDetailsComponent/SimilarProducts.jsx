@@ -1,90 +1,36 @@
-import React, { useRef } from "react";
-import { Card, Tooltip, Button } from "antd";
+import React, { useRef, useEffect, useState } from "react";
+import { Card, Tooltip, Image, Button } from "antd";
 import {
   LeftOutlined,
   RightOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import { toast } from "react-fox-toast";
+import { useNavigate } from "react-router-dom";
 
 const { Meta } = Card;
 
-const SimilarProducts = ({ darkMode }) => {
+const SimilarProducts = ({ darkMode, cat }) => {
   const scrollRef = useRef(null);
+  const [similarProduct, setSimilarProduct] = useState([]);
+  const navigate = useNavigate();
 
-  const products = [
-    // 10 ürün örneği
-    {
-      id: 1,
-      name: "Ürün 1",
-      description: "www.site.com",
-      price: 100,
-      imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      id: 2,
-      name: "Ürün 2",
-      description: "www.site.com",
-      price: 120,
-      imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      id: 3,
-      name: "Ürün 3",
-      description: "www.site.com",
-      price: 130,
-      imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      id: 4,
-      name: "Ürün 4",
-      description: "www.site.com",
-      price: 140,
-      imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      id: 5,
-      name: "Ürün 5",
-      description: "www.site.com",
-      price: 150,
-      imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      id: 6,
-      name: "Ürün 6",
-      description: "www.site.com",
-      price: 160,
-      imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      id: 7,
-      name: "Ürün 7",
-      description: "www.site.com",
-      price: 170,
-      imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      id: 8,
-      name: "Ürün 8",
-      description: "www.site.com",
-      price: 180,
-      imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      id: 9,
-      name: "Ürün 9",
-      description: "www.site.com",
-      price: 190,
-      imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      id: 10,
-      name: "Ürün 10",
-      description: "www.site.com",
-      price: 200,
-      imageUrl: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-  ];
+  useEffect(() => {
+    if (!cat) return;
+    fetchSimilarData();
+  }, [cat]);
+
+  const fetchSimilarData = async () => {
+    try {
+      const res = await fetch(
+        `https://localhost:7042/api/Products/getbycategoryid/${cat}`
+      );
+      const data = await res.json();
+      setSimilarProduct(data);
+    } catch (error) {
+      console.log("Benzer ürünler alınamadı:", error);
+    }
+  };
 
   const handleAddToCart = (product) => {
     console.log(`${product.name} sepete eklendi`);
@@ -93,7 +39,7 @@ const SimilarProducts = ({ darkMode }) => {
 
   const scroll = (direction) => {
     if (scrollRef.current) {
-      const scrollAmount = 240 * 5 + 24 * 4;
+      const scrollAmount = 280 * 3 + 24 * 2;
       scrollRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
@@ -112,7 +58,6 @@ const SimilarProducts = ({ darkMode }) => {
       </h1>
 
       <div className="relative">
-        {/* Scroll buttons */}
         <Button
           icon={<LeftOutlined />}
           onClick={() => scroll("left")}
@@ -124,35 +69,63 @@ const SimilarProducts = ({ darkMode }) => {
           className="absolute right-0 top-[40%] z-10"
         />
 
-        {/* Scrollable container */}
         <div
           ref={scrollRef}
-          className="flex overflow-x-auto scrollbar-hide gap-6 pb-4 px-10 w-[1360px] ml-[225px]"
+          className="flex overflow-x-auto scrollbar-hide gap-6 pb-4 px-10 w-[1450px] ml-[225px]"
           style={{ scrollBehavior: "smooth" }}
         >
-          {products.map((product) => (
+          {similarProduct.map((product) => (
             <div
               key={product.id}
-              style={{ minWidth: 240, position: "relative" }}
+              className="relative"
+              style={{ width: 280, flexShrink: 0 }}
             >
               <Card
                 hoverable
-                cover={<img alt={product.name} src={product.imageUrl} />}
-                className={
+                className={`${
                   darkMode ? "bg-gray-700 border-gray-600 text-white" : ""
+                }`}
+                cover={
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    width={280}
+                    height={350}
+                    style={{ objectFit: "cover" }}
+                    preview={{
+                      mask: (
+                        <div style={{ color: "white", fontWeight: "bold" }}>
+                          Büyüt
+                        </div>
+                      ),
+                    }}
+                  />
                 }
               >
-                <Meta title={product.name} description={product.description} />
                 <div
-                  style={{ marginTop: 10, fontWeight: "bold", fontSize: 16 }}
+                  className="group cursor-pointer"
+                  onClick={() => navigate(`/productDetails/${product.id}`)}
                 >
-                  Fiyat: {product.price} TL
+                  <Meta
+                    title={product.name}
+                    description={
+                      <div className="h-10 overflow-hidden">
+                        {product.description}
+                      </div>
+                    }
+                  />
+                  <div className="mt-2 font-bold text-[16px] group-hover:text-green-500 transition-colors duration-200">
+                    Fiyat:{" "}
+                    {product.price.toLocaleString("tr-TR", {
+                      style: "currency",
+                      currency: "TRY",
+                    })}
+                  </div>
                 </div>
               </Card>
 
               <Tooltip title="Sepete Ekle">
                 <ShoppingCartOutlined
-                  className="text-green-400"
                   onClick={() => handleAddToCart(product)}
                   style={{
                     fontSize: 24,

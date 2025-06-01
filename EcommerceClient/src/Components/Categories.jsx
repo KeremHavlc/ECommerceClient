@@ -14,7 +14,6 @@ const Categories = ({ darkMode, setDarkMode }) => {
       }
       const data = await res.json();
       setCategory(data.data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }

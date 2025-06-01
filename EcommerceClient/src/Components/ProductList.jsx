@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Card, Image, Tooltip } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { toast } from "react-fox-toast";
+import { useNavigate } from "react-router-dom";
 const { Meta } = Card;
 
 const ProductList = ({ darkMode }) => {
   const [data, setData] = useState([]);
-
+  const navigate = useNavigate();
   const handleAddToCart = (product) => {
     console.log(product.name + " sepete eklendi!");
     toast.success("Sepete eklendi!");
@@ -52,12 +53,17 @@ const ProductList = ({ darkMode }) => {
             }
             className={darkMode ? "bg-gray-700 border-gray-600 text-white" : ""}
           >
-            <Meta title={product.name} description={product.description} />
-            <div style={{ marginTop: 10, fontWeight: "bold", fontSize: 16 }}>
-              Fiyat: {product.price} TL
+            <div
+              onClick={() => navigate(`/productDetails/${product.id}`)}
+              style={{ cursor: "pointer" }}
+              className="hover:text-green-500"
+            >
+              <Meta title={product.name} description={product.description} />
+              <div style={{ marginTop: 10, fontWeight: "bold", fontSize: 16 }}>
+                Fiyat: {product.price} TL
+              </div>
             </div>
           </Card>
-
           <Tooltip title="Sepete Ekle">
             <ShoppingCartOutlined
               className="text-green-400"

@@ -20,6 +20,7 @@ const ProductDetailsPage = () => {
     localStorage.setItem("mode", darkMode);
   }, [darkMode]);
 
+  const [cat, setCat] = useState();
   return (
     <>
       <div
@@ -40,12 +41,20 @@ const ProductDetailsPage = () => {
 
           {/* Sağdaki sütun: önce info sonra review */}
           <div className="flex flex-col ">
-            <ProductInfo darkMode={darkMode} setDarkMode={setDarkMode} />
+            <ProductInfo
+              darkMode={darkMode}
+              setDarkMode={setDarkMode}
+              setCat={setCat}
+            />
             <ProductReview darkMode={darkMode} setDarkMode={setDarkMode} />
           </div>
           <CartItem darkMode={darkMode} setDarkMode={setDarkMode} />
         </div>
-        <SimilarProducts darkMode={darkMode} setDarkMode={setDarkMode} />
+        <SimilarProducts
+          darkMode={darkMode}
+          setDarkMode={setDarkMode}
+          cat={cat}
+        />
         <Footer darkMode={darkMode} setDarkMode={setDarkMode} />
       </div>
     </>

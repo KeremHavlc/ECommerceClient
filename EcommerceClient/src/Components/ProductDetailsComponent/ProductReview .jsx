@@ -1,50 +1,28 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaStar } from "react-icons/fa";
+import { useParams } from "react-router-dom";
 
 const ProductReview = ({ darkMode }) => {
-  const [reviews] = useState([
-    {
-      id: 1,
-      rating: 5,
-      comment:
-        "Harika ürün, çok memnunum! Kalitesi beklediğimden çok daha iyi.",
-    },
-    {
-      id: 2,
-      rating: 4,
-      comment:
-        "Gayet başarılı, tavsiye ederim. Fiyat performans açısından çok iyi.",
-    },
-    {
-      id: 3,
-      rating: 3,
-      comment: "Ortalama bir ürün, beklentimi tam karşılamadı ama idare eder.",
-    },
-    { id: 4, rating: 5, comment: "Mükemmel! Hızlı kargo ve harika paketleme." },
-    {
-      id: 5,
-      rating: 2,
-      comment: "Ürün biraz beklediğimden kötü çıktı, iade edeceğim.",
-    },
-    {
-      id: 6,
-      rating: 4,
-      comment: "Genel olarak memnunum, küçük bazı eksikler var.",
-    },
-    {
-      id: 7,
-      rating: 5,
-      comment: "Çok güzel tasarım, arkadaşlarıma da önerdim.",
-    },
-    {
-      id: 8,
-      rating: 3,
-      comment: "Fena değil ama rakip ürünlere göre biraz pahalı.",
-    },
-  ]);
-
+  const { id } = useParams();
+  const [reviews, setReviews] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef(null);
+
+  const fetchReviews = async () => {
+    try {
+      const res = await fetch(
+        `https://localhost:7042/api/Comments/getAllCommentByProductId/${id}`
+      );
+      const data = await res.json();
+      setReviews(data || []);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchReviews();
+  }, [id]);
 
   const renderStars = (count) =>
     [...Array(5)].map((_, i) => (
@@ -57,7 +35,7 @@ const ProductReview = ({ darkMode }) => {
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container || reviews.length === 0) return;
 
     const onWheel = (e) => {
       e.preventDefault();
@@ -75,6 +53,21 @@ const ProductReview = ({ darkMode }) => {
     };
   }, [reviews.length]);
 
+  if (reviews.length === 0) {
+    return (
+      <div
+        className={`p-4 mx-auto mt-4 ml-[65px] rounded-2xl shadow-lg w-[615px] h-[180px] flex items-center justify-center
+        ${
+          darkMode
+            ? "bg-gray-800 text-gray-300 shadow-gray-700"
+            : "bg-white text-gray-800 shadow-gray-300"
+        }`}
+      >
+        Henüz yorum yok.
+      </div>
+    );
+  }
+
   const currentReview = reviews[currentIndex];
 
   return (
@@ -83,7 +76,7 @@ const ProductReview = ({ darkMode }) => {
       className={`p-1 mx-auto mt-4 ml-[65px] rounded-2xl shadow-lg w-[615px] overflow-hidden relative
       ${
         darkMode
-          ? "bg-gray-800 text-gray-300 shadow-gray-700 "
+          ? "bg-gray-800 text-gray-300 shadow-gray-700"
           : "bg-white text-gray-800 shadow-gray-300"
       }`}
       style={{ height: "180px" }}
@@ -93,7 +86,7 @@ const ProductReview = ({ darkMode }) => {
       </h3>
 
       <div
-        key={currentReview.id}
+        key={currentReview.userId + currentIndex}
         className={`p-2 ml-1 rounded-md transition-all duration-300 w-[600px] h-[80px] ${
           darkMode ? "bg-gray-700" : "bg-gray-100"
         }`}
@@ -101,7 +94,7 @@ const ProductReview = ({ darkMode }) => {
         <div className="flex items-center mb-2">
           {renderStars(currentReview.rating)}
         </div>
-        <p className="text-lg">{currentReview.comment}</p>
+        <p className="text-lg">{currentReview.commentText}</p>
       </div>
 
       <div className="absolute bottom-4 right-6 text-sm select-none opacity-70">

@@ -1,13 +1,30 @@
-import { Carousel } from "antd";
-import React from "react";
+import { Image } from "antd";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-const ProductDetailsImage = ({ darkMode, setDarkMode }) => {
-  const images = [
-    "https://picsum.photos/id/237/600/550",
-    "https://picsum.photos/id/238/600/550",
-    "https://picsum.photos/id/239/600/550",
-    "https://picsum.photos/id/240/600/550",
-  ];
+const ProductDetailsImage = ({ darkMode }) => {
+  const { id } = useParams();
+  const [productData, setProductData] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      const res = await fetch(
+        `https://localhost:7042/api/Products/getbyid/${id}`
+      );
+      const data = await res.json();
+      setProductData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [id]);
+
+  if (!productData) {
+    return <div className="text-center mt-20">Yükleniyor...</div>;
+  }
 
   return (
     <div
@@ -18,20 +35,24 @@ const ProductDetailsImage = ({ darkMode, setDarkMode }) => {
             : "bg-white border-gray-200 text-gray-700"
         }`}
     >
-      <Carousel arrows infinite={false}>
-        {images.map((img, index) => (
-          <div
-            key={index}
-            className="flex justify-center items-center w-full h-[550px]"
-          >
-            <img
-              src={img}
-              alt={`product-${index}`}
-              className="object-contain max-h-[550px]"
-            />
-          </div>
-        ))}
-      </Carousel>
+      {productData.image ? (
+        <div className="flex justify-center items-center w-full h-[550px]">
+          <Image
+            src={productData.image}
+            alt={productData.name || "product-image"}
+            style={{ maxHeight: 550, objectFit: "contain" }}
+            preview={{
+              mask: (
+                <div style={{ color: "white", fontWeight: "bold" }}>Büyüt</div>
+              ),
+            }}
+          />
+        </div>
+      ) : (
+        <div className="flex justify-center items-center w-full h-[550px]">
+          <p>Görsel bulunamadı</p>
+        </div>
+      )}
     </div>
   );
 };

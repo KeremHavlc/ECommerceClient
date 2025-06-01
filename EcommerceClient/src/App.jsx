@@ -7,6 +7,7 @@ import AllOrdersPage from "./Pages/AllOrdersPage";
 import RatingsAndReviewsPage from "./Pages/RatingsAndReviewsPage";
 import AccountInfoPage from "./Pages/AccountInfoPage";
 import AddressesPage from "./Pages/AddressesPage";
+import CategoryProductsPage from "./Pages/CategoryProductsPage";
 function App() {
   return (
     <BrowserRouter>
@@ -19,6 +20,10 @@ function App() {
         <Route path="/profile/review" element={<RatingsAndReviewsPage />} />
         <Route path="/profile/Account" element={<AccountInfoPage />} />
         <Route path="/profile/Addresses" element={<AddressesPage />} />
+        <Route
+          path="/categories/:categoryId"
+          element={<CategoryProductsPage />}
+        />
       </Routes>
     </BrowserRouter>
   );

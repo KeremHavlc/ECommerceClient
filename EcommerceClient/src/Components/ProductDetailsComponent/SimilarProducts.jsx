@@ -6,7 +6,7 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import { toast } from "react-fox-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const { Meta } = Card;
 
@@ -14,11 +14,11 @@ const SimilarProducts = ({ darkMode, cat }) => {
   const scrollRef = useRef(null);
   const [similarProduct, setSimilarProduct] = useState([]);
   const navigate = useNavigate();
-
+  const { id } = useParams();
   useEffect(() => {
     if (!cat) return;
     fetchSimilarData();
-  }, [cat]);
+  }, [cat, id]);
 
   const fetchSimilarData = async () => {
     try {
@@ -26,7 +26,8 @@ const SimilarProducts = ({ darkMode, cat }) => {
         `https://localhost:7042/api/Products/getbycategoryid/${cat}`
       );
       const data = await res.json();
-      setSimilarProduct(data);
+      const filteredData = data.filter((p) => p.id !== id);
+      setSimilarProduct(filteredData);
     } catch (error) {
       console.log("Benzer ürünler alınamadı:", error);
     }

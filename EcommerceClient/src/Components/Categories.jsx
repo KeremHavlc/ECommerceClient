@@ -1,26 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { FiMoon, FiSun } from "react-icons/fi";
 import { MdCategory } from "react-icons/md";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Categories = ({ darkMode, setDarkMode }) => {
   const [selected, setSelected] = useState("Tüm Kategoriler");
   const [category, setCategory] = useState([]);
+  const navigate = useNavigate();
+  const { categoryId } = useParams();
 
   const fetchCategories = async () => {
     try {
       const res = await fetch("https://localhost:7042/api/Categories/getAll");
       if (!res.ok) {
-        console.log(error);
+        console.log("Kategori fetch hatası");
+        return;
       }
       const data = await res.json();
-      setCategory(data.data);
+      setCategory(data.data || []);
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    if (category.length && categoryId) {
+      const selectedCategory = category.find((cat) => cat.id === categoryId);
+      if (selectedCategory) setSelected(selectedCategory.name);
+      else setSelected("Tüm Kategoriler");
+    } else {
+      setSelected("Tüm Kategoriler");
+    }
+  }, [category, categoryId]);
 
   return (
     <div
@@ -30,10 +45,13 @@ const Categories = ({ darkMode, setDarkMode }) => {
           : "bg-white border-gray-200 text-gray-700"
       }`}
     >
-      {/* Tüm Kategoriler bölümü */}
+      {/* Tüm Kategoriler */}
       <div
         className="flex items-center mr-20 cursor-pointer"
-        onClick={() => setSelected("Tüm Kategoriler")}
+        onClick={() => {
+          setSelected("Tüm Kategoriler");
+          navigate(`/`);
+        }}
       >
         <MdCategory className="mr-2 text-xl" />
         <button
@@ -51,13 +69,16 @@ const Categories = ({ darkMode, setDarkMode }) => {
         </button>
       </div>
 
-      {/* Diğer kategoriler */}
+      {/* Kategoriler */}
       <div className="flex space-x-6 overflow-x-auto scrollbar-hide ml-3">
         {Array.isArray(category) &&
           category.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => setSelected(cat.name)}
+              onClick={() => {
+                setSelected(cat.name);
+                navigate(`/categories/${cat.id}`);
+              }}
               className={`whitespace-nowrap px-3 py-1 rounded-md font-medium transition-colors duration-200 ${
                 selected === cat.name
                   ? darkMode
@@ -72,7 +93,8 @@ const Categories = ({ darkMode, setDarkMode }) => {
             </button>
           ))}
       </div>
-      {/* Dark Mode Toggle Button */}
+
+      {/* Dark Mode Toggle */}
       <div className="ml-auto">
         <button
           onClick={() => setDarkMode(!darkMode)}

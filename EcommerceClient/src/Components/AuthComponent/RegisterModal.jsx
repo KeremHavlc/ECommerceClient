@@ -40,18 +40,27 @@ const RegisterModal = ({ onClose, darkMode }) => {
         },
         body: JSON.stringify(payload),
       });
-
       if (!response.ok) {
-        console.log(error);
-      }
+        const errorData = await response.json();
 
+        if (errorData.errors) {
+          Object.values(errorData.errors).forEach((messages) => {
+            messages.forEach((message) => toast.error(message));
+          });
+        } else if (errorData.message) {
+          toast.error(errorData.message);
+        } else if (errorData.title) {
+          toast.error(errorData.title);
+        } else {
+          toast.error("İşlem başarısız oldu. Lütfen tekrar deneyin.");
+        }
+      }
       const data = await response.text();
       console.log(data);
       toast.success("Kayıt Başarılı");
       onClose();
     } catch (err) {
       console.error(err);
-      toast.error("Bir hata oluştu!");
     }
   };
 

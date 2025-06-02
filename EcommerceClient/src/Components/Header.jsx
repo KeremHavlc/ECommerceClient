@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import LoginModal from "./AuthComponent/LoginModal";
 import RegisterModal from "./AuthComponent/RegisterModal";
+import { toast } from "react-fox-toast";
 
 const Header = ({ darkMode, setDarkMode }) => {
   const [cartItemCount] = useState(3);
@@ -18,9 +19,23 @@ const Header = ({ darkMode, setDarkMode }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("https://localhost:7042/api/Auth/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      const data = await response.text();
+      console.log(data);
+      setIsLoggedIn(false);
+      toast.success("Çıkış Yapıldı!");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

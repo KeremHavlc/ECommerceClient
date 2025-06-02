@@ -11,13 +11,17 @@ import LoginModal from "./AuthComponent/LoginModal";
 import RegisterModal from "./AuthComponent/RegisterModal";
 
 const Header = ({ darkMode, setDarkMode }) => {
-  const cartItemCount = 3;
-  const isLoggedIn = false;
+  const [cartItemCount] = useState(3);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  // Modal state'leri
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    navigate("/");
+  };
 
   return (
     <>
@@ -94,6 +98,7 @@ const Header = ({ darkMode, setDarkMode }) => {
                 )}
               </button>
               <button
+                onClick={handleLogout}
                 className={`flex items-center gap-1 cursor-pointer hover:text-green-400 text-gray-400`}
               >
                 <FiLogOut size={18} />
@@ -132,6 +137,8 @@ const Header = ({ darkMode, setDarkMode }) => {
         <LoginModal
           onClose={() => setShowLoginModal(false)}
           darkMode={darkMode}
+          setIsLoggedIn={setIsLoggedIn}
+          onCloseAll={() => setShowLoginModal(false)}
         />
       )}
       {showRegisterModal && (

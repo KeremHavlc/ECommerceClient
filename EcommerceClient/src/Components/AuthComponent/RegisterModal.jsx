@@ -51,7 +51,7 @@ const RegisterModal = ({ onClose, darkMode }) => {
       onClose();
     } catch (err) {
       console.error(err);
-      toast.success("Bir hata oluştu!");
+      toast.error("Bir hata oluştu!");
     }
   };
 

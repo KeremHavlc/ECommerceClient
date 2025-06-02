@@ -8,6 +8,7 @@ import RatingsAndReviewsPage from "./Pages/RatingsAndReviewsPage";
 import AccountInfoPage from "./Pages/AccountInfoPage";
 import AddressesPage from "./Pages/AddressesPage";
 import CategoryProductsPage from "./Pages/CategoryProductsPage";
+
 function App() {
   return (
     <BrowserRouter>

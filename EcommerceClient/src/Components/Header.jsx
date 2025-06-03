@@ -6,31 +6,37 @@ import {
   FiSearch,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoginModal from "./AuthComponent/LoginModal";
 import RegisterModal from "./AuthComponent/RegisterModal";
 import { toast } from "react-fox-toast";
 
 const Header = ({ darkMode, setDarkMode }) => {
-  const [cartItemCount] = useState(3);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
-
+  const [authToken, setAuthToken] = useState(localStorage.getItem("authToken"));
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [cartItemCount] = useState(3);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const onStorageChange = () => {
+      setAuthToken(localStorage.getItem("authToken"));
+    };
+    window.addEventListener("storage", onStorageChange);
+    return () => window.removeEventListener("storage", onStorageChange);
+  }, []);
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("https://localhost:7042/api/Auth/logout", {
+      await fetch("https://localhost:7042/api/Auth/logout", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
-      const data = await response.text();
-      console.log(data);
-      setIsLoggedIn(false);
+
+      localStorage.removeItem("authToken");
+      setAuthToken(null);
+
       toast.success("Çıkış Yapıldı!");
       navigate("/");
     } catch (error) {
@@ -38,9 +44,13 @@ const Header = ({ darkMode, setDarkMode }) => {
     }
   };
 
+  const handleLoginSuccess = () => {
+    setAuthToken(localStorage.getItem("authToken"));
+    setShowLoginModal(false);
+  };
+
   return (
     <>
-      {/* HEADER */}
       <header
         className={`h-[70px] shadow-md border-b px-80 flex justify-between items-center
           ${
@@ -83,7 +93,7 @@ const Header = ({ darkMode, setDarkMode }) => {
 
         {/* Pages / Auth Area */}
         <div className="flex items-center gap-8 text-sm font-medium">
-          {isLoggedIn ? (
+          {authToken ? (
             <>
               <button
                 onClick={() => navigate("/")}
@@ -152,8 +162,7 @@ const Header = ({ darkMode, setDarkMode }) => {
         <LoginModal
           onClose={() => setShowLoginModal(false)}
           darkMode={darkMode}
-          setIsLoggedIn={setIsLoggedIn}
-          onCloseAll={() => setShowLoginModal(false)}
+          setIsLoggedIn={handleLoginSuccess}
         />
       )}
       {showRegisterModal && (

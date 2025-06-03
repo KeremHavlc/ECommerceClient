@@ -32,7 +32,6 @@ const LoginModal = ({ onClose, darkMode, setIsLoggedIn }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify(payload),
       });
 
@@ -42,7 +41,16 @@ const LoginModal = ({ onClose, darkMode, setIsLoggedIn }) => {
         toast.error("Giriş başarısız!");
         return;
       }
-      const data = await response.text();
+
+      const data = await response.json();
+
+      if (data.accessToken) {
+        localStorage.setItem("authToken", data.accessToken);
+      } else if (data.data?.accessToken) {
+        localStorage.setItem("authToken", data.data.accessToken);
+      } else {
+        console.warn("Token bulunamadı!");
+      }
       toast.success("Giriş Başarılı!");
 
       setIsLoggedIn(true);

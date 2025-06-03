@@ -35,7 +35,7 @@ const CategoryProductList = ({ darkMode }) => {
   return (
     <>
       <div className="flex flex-wrap justify-start gap-6 px-10 mt-12 ml-[310px] w-[1450px]">
-        {data.map((product) => (
+        {data.data?.map((product) => (
           <div key={product.id} style={{ position: "relative", width: 280 }}>
             <Card
               hoverable

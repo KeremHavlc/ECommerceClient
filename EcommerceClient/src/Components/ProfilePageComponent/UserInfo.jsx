@@ -1,7 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-fox-toast";
 import { FiUser } from "react-icons/fi";
 
-const UserInfo = ({ darkMode, setDarkMode }) => {
+const UserInfo = ({ darkMode }) => {
+  const [userData, setUserData] = useState();
+  const getUserIdFromToken = () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) return null;
+
+    try {
+      const payload = token.split(".")[1];
+      const decoded = JSON.parse(atob(payload));
+      return decoded.userId || decoded["userId"];
+    } catch (err) {
+      console.error("Token çözümleme hatası:", err);
+      return null;
+    }
+  };
+
+  const userId = getUserIdFromToken();
+  const fetchUserInfo = async () => {
+    try {
+      const res = await fetch(
+        `https://localhost:7042/api/Users/getbyid/${userId}`
+      );
+      if (!res.ok) {
+        toast.error("Bir hata oluştu!");
+      }
+      const data = await res.json();
+      setUserData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
   return (
     <div
       className={`border rounded-lg shadow-md w-[250px] h-[50px] ml-[321px] mt-[40px] flex justify-center items-center
@@ -18,7 +52,10 @@ const UserInfo = ({ darkMode, setDarkMode }) => {
         `}
       >
         <FiUser size={20} />
-        <span className="font-bold">Kerem Havlucu</span>
+        <span className="font-bold">
+          {" "}
+          {userData?.data?.name} {userData?.data?.surname}
+        </span>
       </div>
     </div>
   );

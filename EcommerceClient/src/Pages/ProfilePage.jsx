@@ -12,24 +12,23 @@ const ProfilePage = () => {
     }
     return false;
   });
+
   useEffect(() => {
     localStorage.setItem("mode", darkMode);
   }, [darkMode]);
 
   return (
-    <>
-      <div
-        className={`select-none ${
-          darkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-gray-900"
-        } min-h-screen transition-colors duration-300`}
-      >
-        <Header darkMode={darkMode} setDarkMode={setDarkMode} />
-        <Categories darkMode={darkMode} setDarkMode={setDarkMode} />
-        <UserInfo darkMode={darkMode} setDarkMode={setDarkMode} />
-        <OrderList darkMode={darkMode} setDarkMode={setDarkMode} />
-        <AccountInfo darkMode={darkMode} setDarkMode={setDarkMode} />
-      </div>
-    </>
+    <div
+      className={`select-none ${
+        darkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-gray-900"
+      } min-h-screen transition-colors duration-300`}
+    >
+      <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Categories darkMode={darkMode} setDarkMode={setDarkMode} />
+      <UserInfo darkMode={darkMode} setDarkMode={setDarkMode} />
+      <OrderList darkMode={darkMode} setDarkMode={setDarkMode} />
+      <AccountInfo darkMode={darkMode} setDarkMode={setDarkMode} />
+    </div>
   );
 };
 

@@ -54,7 +54,8 @@ const UserInfo = ({ darkMode }) => {
         <FiUser size={20} />
         <span className="font-bold">
           {" "}
-          {userData?.data?.name} {userData?.data?.surname}
+          {userData?.data?.name.toUpperCase()}{" "}
+          {userData?.data?.surname.toUpperCase()}
         </span>
       </div>
     </div>

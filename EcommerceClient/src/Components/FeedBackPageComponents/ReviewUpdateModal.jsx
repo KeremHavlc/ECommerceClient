@@ -42,7 +42,7 @@ const ReviewUpdateModal = ({
         className: darkMode ? "dark-btn" : "light-btn",
       }}
       className={darkMode ? "dark-modal" : "light-modal"}
-      bodyStyle={{
+      stylesBody={{
         backgroundColor: darkMode ? "#1f2937" : "#fff",
         color: darkMode ? "#fff" : "#000",
       }}

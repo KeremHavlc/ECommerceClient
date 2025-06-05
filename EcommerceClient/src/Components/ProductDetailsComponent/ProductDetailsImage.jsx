@@ -5,14 +5,13 @@ import { useParams } from "react-router-dom";
 const ProductDetailsImage = ({ darkMode }) => {
   const { id } = useParams();
   const [productData, setProductData] = useState(null);
-
   const fetchData = async () => {
     try {
       const res = await fetch(
         `https://localhost:7042/api/Products/getbyid/${id}`
       );
-      const data = await res.json();
-      setProductData(data);
+      const result = await res.json();
+      setProductData(result.data);
     } catch (error) {
       console.log(error);
     }

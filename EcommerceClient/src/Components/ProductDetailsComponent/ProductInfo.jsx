@@ -12,8 +12,10 @@ const ProductInfo = ({ darkMode, setCat }) => {
       const res = await fetch(
         `https://localhost:7042/api/Products/getbyid/${id}`
       );
-      const data = await res.json();
+      const result = await res.json();
+      const data = result.data;
       setProductInfo(data);
+
       if (data.categoryId) {
         setCat(data.categoryId);
       }

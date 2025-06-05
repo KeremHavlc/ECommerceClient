@@ -19,14 +19,14 @@ const SimilarProducts = ({ darkMode, cat }) => {
     if (!cat) return;
     fetchSimilarData();
   }, [cat, id]);
-
   const fetchSimilarData = async () => {
     try {
       const res = await fetch(
         `https://localhost:7042/api/Products/getbycategoryid/${cat}`
       );
-      const data = await res.json();
-      const filteredData = data.filter((p) => p.id !== id);
+      const result = await res.json();
+      const products = result.data || [];
+      const filteredData = products.filter((p) => p.id !== id);
       setSimilarProduct(filteredData);
     } catch (error) {
       console.log("Benzer ürünler alınamadı:", error);

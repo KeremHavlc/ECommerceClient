@@ -14,7 +14,8 @@ const ProductReview = ({ darkMode }) => {
         `https://localhost:7042/api/Comments/getAllCommentByProductId/${id}`
       );
       const data = await res.json();
-      setReviews(data || []);
+      setReviews(data.data || data || []);
+      setCurrentIndex(0);
     } catch (error) {
       console.log(error);
     }
@@ -24,7 +25,7 @@ const ProductReview = ({ darkMode }) => {
     fetchReviews();
   }, [id]);
 
-  const renderStars = (count) =>
+  const renderStars = (count = 0) =>
     [...Array(5)].map((_, i) => (
       <FaStar
         key={i}
@@ -68,7 +69,7 @@ const ProductReview = ({ darkMode }) => {
     );
   }
 
-  const currentReview = reviews[currentIndex];
+  const currentReview = reviews[currentIndex] || {};
 
   return (
     <div
@@ -86,15 +87,17 @@ const ProductReview = ({ darkMode }) => {
       </h3>
 
       <div
-        key={currentReview.userId + currentIndex}
+        key={(currentReview.userId || "") + currentIndex}
         className={`p-2 ml-1 rounded-md transition-all duration-300 w-[600px] h-[80px] ${
           darkMode ? "bg-gray-700" : "bg-gray-100"
         }`}
       >
         <div className="flex items-center mb-2">
-          {renderStars(currentReview.rating)}
+          {renderStars(Number(currentReview.rating) || 0)}
         </div>
-        <p className="text-lg">{currentReview.commentText}</p>
+        <p className="text-lg">
+          {currentReview.commentText || "Yorum metni bulunamadı."}
+        </p>
       </div>
 
       <div className="absolute bottom-4 right-6 text-sm select-none opacity-70">
